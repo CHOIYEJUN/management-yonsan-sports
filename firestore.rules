@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 강사 목록: 누구나 조회 가능, 등록/수정/삭제는 로그인한 관리자만
+    match /instructors/{instructorId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
