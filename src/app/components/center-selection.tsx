@@ -37,7 +37,7 @@ export function CenterSelection({ centers, categories, onSelectCenter, onSelectC
           <h2 className="mb-3">시설 선택</h2>
           <p className="text-muted-foreground">원하시는 시설을 선택해주세요</p>
         </div>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+        <div className="grid grid-cols-4 gap-4 md:gap-8 md:grid-cols-3 max-w-5xl mx-auto">
           {centers.map((center) => {
             const Icon = centerIconMap[center.icon] || Building2;
             return (
@@ -76,7 +76,7 @@ export function CenterSelection({ centers, categories, onSelectCenter, onSelectC
           <h2 className="mb-3">종목별 강사 찾기</h2>
           <p className="text-muted-foreground">원하시는 종목을 선택해주세요</p>
         </div>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-4 gap-4 md:gap-6 md:grid-cols-4 max-w-5xl mx-auto">
           {categories.map((category) => {
             const Icon = categoryIconMap[category.icon] || User;
             return (

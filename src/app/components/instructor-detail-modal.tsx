@@ -79,6 +79,21 @@ export function InstructorDetailModal({
 
         {/* 주요 자격 & 경력 사항 - 세로로 한 페이지에 표시 */}
         <div className="flex flex-col gap-10 pt-4 overflow-y-auto min-h-0">
+          {instructor.assignedClasses && instructor.assignedClasses.length > 0 && (
+            <section>
+              <h4 className="text-lg font-semibold text-primary mb-4 pb-2 border-b border-primary/20">
+                담당 강습
+              </h4>
+              <ul className="space-y-2 list-disc list-inside text-base">
+                {instructor.assignedClasses.map((cls, index) => (
+                  <li key={index} className="break-keep">
+                    {cls}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           <section>
             <h4 className="text-lg font-semibold text-primary mb-4 pb-2 border-b border-primary/20">주요 자격</h4>
             <div className="space-y-3">

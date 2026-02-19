@@ -6,5 +6,10 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null;
     }
+    // 시간표 URL: 누구나 조회, 등록/수정/삭제는 로그인한 관리자만
+    match /timetableUrls/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
   }
 }

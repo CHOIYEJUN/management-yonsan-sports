@@ -7,6 +7,8 @@ export interface Instructor {
   imageUrl?: string;
   /** 성별 (남자/여자 표시용) */
   gender?: "male" | "female";
+  /** 담당 강습(반) 목록 */
+  assignedClasses?: string[];
   licenses: string[];
   career: string[];
 }

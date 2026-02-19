@@ -28,21 +28,26 @@ export function CategoryOverview({
   onBack,
   onInstructorClick,
 }: CategoryOverviewProps) {
-  // 센터별로 그룹화
-  const instructorsByCenter = centers.map((center) => ({
-    center,
-    categoryGroups: categories.map((category) => ({
-      category,
-      instructors: instructors.filter(
-        (inst) => inst.currentCenter === center && inst.category === category
-      ),
-    })).filter((group) => group.instructors.length > 0),
-  })).filter((centerGroup) => centerGroup.categoryGroups.length > 0);
+  // 근무센터 기준으로 그룹화
+  const instructorsByCenter = centers
+    .map((center) => ({
+      center,
+      categoryGroups: categories
+        .map((category) => ({
+          category,
+          instructors: instructors.filter(
+            (inst) => inst.currentCenter === center && inst.category === category
+          ),
+        }))
+        .filter((group) => group.instructors.length > 0),
+    }))
+    .filter((centerGroup) => centerGroup.categoryGroups.length > 0);
 
   return (
     <div className="min-h-screen">
-      {/* Breadcrumb & Back Button */}
-      <div className="container mx-auto px-4 py-6 border-b">
+      {/* Breadcrumb & Back Button - sticky below header */}
+      <div className="sticky top-16 z-30 w-full py-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <Button variant="outline" size="sm" onClick={onBack} className="hover:bg-primary/10">
             <ArrowLeft className="h-4 w-4" />
@@ -54,12 +59,13 @@ export function CategoryOverview({
             <span className="font-medium text-primary">종목별 강사 찾기</span>
           </div>
         </div>
+        </div>
       </div>
 
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h2 className="mb-3 text-3xl">종목별 강사 찾기</h2>
-          <p className="text-muted-foreground">사업장별로 분류된 전체 강사 명단입니다</p>
+          <p className="text-muted-foreground">근무센터별로 분류된 전체 강사 명단입니다</p>
         </div>
 
         <div className="space-y-12 max-w-7xl mx-auto">
@@ -68,14 +74,15 @@ export function CategoryOverview({
             
             return (
               <div key={centerGroup.center} className="space-y-6">
-                {/* Center Header */}
+                {/* 근무센터 기준 섹션 */}
                 <div className="flex items-center gap-4 pb-4 border-b-2 border-primary/20">
                   <div className="rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 p-4 flex-shrink-0">
                     <CenterIcon className="h-8 w-8 text-primary" />
                   </div>
                   <div className="min-w-0 flex-1">
+                    <p className="text-sm text-muted-foreground mb-0.5">근무센터</p>
                     <h3 className="text-2xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{centerGroup.center}</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground mt-1">
                       {centerGroup.categoryGroups.reduce(
                         (sum, group) => sum + group.instructors.length,
                         0

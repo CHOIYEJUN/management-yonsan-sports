@@ -23,8 +23,9 @@ const iconMap: Record<string, any> = {
 export function CategorySelection({ categories, onSelectCategory, onBack, selectedCenter }: CategorySelectionProps) {
   return (
     <div className="min-h-screen">
-      {/* Breadcrumb & Back Button */}
-      <div className="container mx-auto px-4 py-6 border-b">
+      {/* Breadcrumb & Back Button - sticky below header */}
+      <div className="sticky top-16 z-30 w-full py-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <Button variant="outline" size="sm" onClick={onBack} className="hover:bg-primary/10">
             <ArrowLeft className="h-4 w-4" />
@@ -36,6 +37,7 @@ export function CategorySelection({ categories, onSelectCategory, onBack, select
             <span className="font-medium text-primary whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px] sm:max-w-none">{selectedCenter}</span>
           </div>
         </div>
+        </div>
       </div>
 
       <section className="container mx-auto px-4 py-16">
@@ -43,7 +45,7 @@ export function CategorySelection({ categories, onSelectCategory, onBack, select
           <h2 className="mb-3">종목 선택</h2>
           <p className="text-muted-foreground whitespace-nowrap overflow-hidden text-ellipsis max-w-full px-2">{selectedCenter}에서 원하시는 종목을 선택해주세요</p>
         </div>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-4 gap-4 md:gap-6 md:grid-cols-4 max-w-5xl mx-auto">
           {categories.map((category) => {
             const Icon = iconMap[category.icon] || User;
             return (

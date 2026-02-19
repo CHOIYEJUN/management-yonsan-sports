@@ -1,15 +1,9 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "./ui/button";
 import { InstructorCard } from "./instructor-card";
 import { Instructor } from "../../lib/firebase-mock";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { getTimetableUrl } from "../../lib/timetable-url-service";
 
 interface InstructorGalleryProps {
   instructors: Instructor[];
@@ -26,7 +20,21 @@ export function InstructorGallery({
   filterCenter,
   filterCategory,
 }: InstructorGalleryProps) {
-  const [sortBy, setSortBy] = useState<string>("name");
+  const [timetableUrl, setTimetableUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!filterCenter || !filterCategory) {
+      setTimetableUrl(null);
+      return;
+    }
+    let cancelled = false;
+    getTimetableUrl(filterCenter, filterCategory).then((url) => {
+      if (!cancelled) setTimetableUrl(url);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [filterCenter, filterCategory]);
 
   const filteredInstructors = instructors
     .filter((inst) => {
@@ -34,17 +42,12 @@ export function InstructorGallery({
       if (filterCategory && inst.category !== filterCategory) return false;
       return true;
     })
-    .sort((a, b) => {
-      if (sortBy === "name") {
-        return a.name.localeCompare(b.name, "ko");
-      }
-      return 0;
-    });
+    .sort((a, b) => a.name.localeCompare(b.name, "ko"));
 
   return (
     <div className="container mx-auto px-4 py-8 min-h-screen">
-      {/* Breadcrumb & Back Button */}
-      <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-4 border-b">
+      {/* Breadcrumb & Back Button - sticky below header */}
+      <div className="sticky top-16 z-30 -mx-4 px-4 -mt-8 pt-8 mb-8 pb-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Button variant="outline" size="sm" onClick={onBack} className="hover:bg-primary/10">
           <ArrowLeft className="h-4 w-4" />
           뒤로가기
@@ -79,16 +82,15 @@ export function InstructorGallery({
         </div>
         
         <div className="flex items-center gap-3">
-          <span className="text-sm text-muted-foreground font-medium">정렬:</span>
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="정렬 기준" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="name">이름순</SelectItem>
-              <SelectItem value="experience">경력순</SelectItem>
-            </SelectContent>
-          </Select>
+          {filterCenter && filterCategory && timetableUrl && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => window.open(timetableUrl!, "_blank")}
+            >
+              시간표 / 리플렛 보기
+            </Button>
+          )}
         </div>
       </div>
 

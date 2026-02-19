@@ -22,6 +22,7 @@ function toInstructor(id: string, data: DocumentData): Instructor {
     position: data.position ?? "",
     imageUrl: data.imageUrl,
     gender: data.gender === "female" || data.gender === "male" ? data.gender : undefined,
+    assignedClasses: Array.isArray(data.assignedClasses) ? data.assignedClasses : [],
     licenses: Array.isArray(data.licenses) ? data.licenses : [],
     career: Array.isArray(data.career) ? data.career : [],
   };
@@ -45,6 +46,7 @@ export async function saveInstructor(instructor: Instructor): Promise<void> {
     position: instructor.position,
     imageUrl: instructor.imageUrl ?? null,
     gender: instructor.gender ?? null,
+    assignedClasses: instructor.assignedClasses ?? [],
     licenses: instructor.licenses,
     career: instructor.career,
   });

@@ -7,6 +7,7 @@ import { InstructorGallery } from "./components/instructor-gallery";
 import { InstructorDetailModal } from "./components/instructor-detail-modal";
 import { AdminDashboard } from "./components/admin-dashboard";
 import { LoginDialog } from "./components/login-dialog";
+import { SearchPage } from "./components/search-page";
 import { mockCenters, mockCategories, getCategoriesForCenter } from "../lib/firebase-mock";
 import type { Instructor } from "../lib/types";
 import { useAuth } from "../lib/auth-context";
@@ -18,8 +19,15 @@ import {
 
 type PageStep = "center" | "category" | "categoryOverview" | "gallery" | "detail";
 
+function getSearchQueryFromHash(): string {
+  if (typeof window === "undefined") return "";
+  const match = window.location.hash.match(/#search\?q=([^&]*)/);
+  return match ? decodeURIComponent(match[1].replace(/\+/g, " ")) : "";
+}
+
 export default function App() {
   const { isAdmin } = useAuth();
+  const [searchView, setSearchView] = useState<{ active: boolean; query: string }>({ active: false, query: "" });
   const [currentStep, setCurrentStep] = useState<PageStep>("center");
   const [selectedCenter, setSelectedCenter] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -29,6 +37,17 @@ export default function App() {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [instructors, setInstructors] = useState<Instructor[]>([]);
   const [instructorsLoading, setInstructorsLoading] = useState(true);
+  const [editingInstructor, setEditingInstructor] = useState<Instructor | null>(null);
+
+  useEffect(() => {
+    const check = () => {
+      const isSearch = typeof window !== "undefined" && window.location.hash.startsWith("#search");
+      setSearchView({ active: isSearch, query: isSearch ? getSearchQueryFromHash() : "" });
+    };
+    check();
+    window.addEventListener("hashchange", check);
+    return () => window.removeEventListener("hashchange", check);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -46,6 +65,12 @@ export default function App() {
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.title = "용산구시설관리공단 지도자 현황";
+    }
   }, []);
 
   const handleCenterSelect = (centerId: string) => {
@@ -115,6 +140,26 @@ export default function App() {
     setInstructors(instructors.filter((i) => i.id !== instructorId));
   };
 
+  const handleEditFromDetail = (instructor: Instructor) => {
+    if (!isAdmin) return;
+    setSelectedInstructor(instructor);
+    setShowDetailModal(false);
+    setEditingInstructor(instructor);
+    setShowAdminDashboard(true);
+  };
+
+  if (searchView.active) {
+    return (
+      <SearchPage
+        query={searchView.query}
+        onClose={() => {
+          window.location.hash = "";
+          setSearchView({ active: false, query: "" });
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar
@@ -170,14 +215,19 @@ export default function App() {
         open={showDetailModal}
         onClose={() => setShowDetailModal(false)}
         isAdmin={isAdmin}
+        onEdit={handleEditFromDetail}
       />
 
       <AdminDashboard
         open={showAdminDashboard}
-        onClose={() => setShowAdminDashboard(false)}
+        onClose={() => {
+          setShowAdminDashboard(false);
+          setEditingInstructor(null);
+        }}
         instructors={instructors}
         onSave={handleSaveInstructor}
         onDelete={handleDeleteInstructor}
+        editingInstructor={editingInstructor || undefined}
       />
 
       <LoginDialog

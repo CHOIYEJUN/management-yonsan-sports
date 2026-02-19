@@ -24,12 +24,16 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null;
     }
+    match /timetableUrls/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
   }
 }
 ```
 
-- **read: if true** → 비로그인 사용자도 강사 목록 조회 가능
-- **write: if request.auth != null** → 로그인한 관리자만 등록/수정/삭제 가능
+- **instructors**: 비로그인 사용자도 강사 목록 조회 가능, 로그인한 관리자만 등록/수정/삭제
+- **timetableUrls**: 시간표 URL 조회는 모두 가능, 등록/수정/삭제는 로그인한 관리자만
 
 ## 3. (선택) Firebase CLI로 규칙 배포
 
