@@ -1,7 +1,13 @@
-import { Waves, Dumbbell, Bike, User, BookOpen, Activity, CircleDot, ArrowLeft } from "lucide-react";
+import type { ComponentProps } from "react";
+import { Icon, Waves, Dumbbell, Bike, User, BookOpen, Activity, CircleDot, ArrowLeft } from "lucide-react";
+import { tennisBall } from "@lucide/lab";
 import { Card, CardContent } from "./ui/card";
 import { Category } from "../../lib/firebase-mock";
 import { Button } from "./ui/button";
+
+const TennisBallIcon = (props: Omit<ComponentProps<typeof Icon>, "iconNode">) => (
+  <Icon {...props} iconNode={tennisBall} />
+);
 
 interface CategorySelectionProps {
   categories: Category[];
@@ -18,6 +24,7 @@ const iconMap: Record<string, any> = {
   "circle-dot": CircleDot,
   "book-open": BookOpen,
   activity: Activity,
+  "tennis-ball": TennisBallIcon,
 };
 
 export function CategorySelection({ categories, onSelectCategory, onBack, selectedCenter }: CategorySelectionProps) {

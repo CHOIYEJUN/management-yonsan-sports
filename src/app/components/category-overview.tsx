@@ -1,4 +1,10 @@
-import { ArrowLeft, Building2, Building, School, Dumbbell as DumbbellIcon, Waves } from "lucide-react";
+import type { ComponentProps } from "react";
+import { Icon, ArrowLeft, Building2, Building, School, Dumbbell as DumbbellIcon, Waves } from "lucide-react";
+import { tennisBall } from "@lucide/lab";
+
+const TennisBallIcon = (props: Omit<ComponentProps<typeof Icon>, "iconNode">) => (
+  <Icon {...props} iconNode={tennisBall} />
+);
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -19,6 +25,7 @@ const centerIconMap: Record<string, any> = {
   문화체육센터: Building2,
   이태원초등학교수영장: Waves,
   한강로피트니스센터: DumbbellIcon,
+  "한남 테니스장": TennisBallIcon,
 };
 
 export function CategoryOverview({

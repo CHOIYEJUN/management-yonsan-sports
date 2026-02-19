@@ -1,4 +1,10 @@
-import { Building2, Building, School, Dumbbell, Waves, Bike, User, Users, BookOpen, Activity, CircleDot } from "lucide-react";
+import type { ComponentProps } from "react";
+import { Icon, Building2, Building, School, Dumbbell, Waves, Bike, User, Users, BookOpen, Activity, CircleDot, Circle } from "lucide-react";
+import { tennisBall } from "@lucide/lab";
+
+const TennisBallIcon = (props: Omit<ComponentProps<typeof Icon>, "iconNode">) => (
+  <Icon {...props} iconNode={tennisBall} />
+);
 import { Card, CardContent } from "./ui/card";
 import { Center, Category } from "../../lib/firebase-mock";
 import { Button } from "./ui/button";
@@ -17,6 +23,8 @@ const centerIconMap: Record<string, any> = {
   dumbbell: Dumbbell,
   waves: Waves,
   users: Users,
+  circle: Circle,
+  "tennis-ball": TennisBallIcon,
 };
 
 const categoryIconMap: Record<string, any> = {
@@ -27,6 +35,7 @@ const categoryIconMap: Record<string, any> = {
   "circle-dot": CircleDot,
   "book-open": BookOpen,
   activity: Activity,
+  "tennis-ball": TennisBallIcon,
 };
 
 export function CenterSelection({ centers, categories, onSelectCenter, onSelectCategoryDirect }: CenterSelectionProps) {

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Trash2, Plus, X, Calendar, ArrowLeft } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { Trash2, Plus, X, Calendar, ArrowLeft, Search } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -69,6 +69,18 @@ export function AdminDashboard({
   const [editingTimetableEntry, setEditingTimetableEntry] = useState<TimetableUrlEntry | null>(null);
   const [timetableSaving, setTimetableSaving] = useState(false);
   const [timetableError, setTimetableError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredInstructors = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return instructors;
+    return instructors.filter(
+      (i) =>
+        i.name.toLowerCase().includes(q) ||
+        i.currentCenter.toLowerCase().includes(q) ||
+        i.category.toLowerCase().includes(q)
+    );
+  }, [instructors, searchQuery]);
 
   const loadTimetableEntries = async () => {
     try {
@@ -328,8 +340,28 @@ export function AdminDashboard({
               </div>
             </div>
 
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="이름 / 시설 / 종목으로 검색"
+                className="pl-9"
+              />
+            </div>
+            {searchQuery.trim() && (
+              <p className="text-sm text-muted-foreground">
+                {filteredInstructors.length}명 검색됨
+              </p>
+            )}
+
             <div className="space-y-2">
-              {instructors.map((instructor) => (
+              {filteredInstructors.length === 0 ? (
+                <div className="rounded-lg border p-6 text-center text-muted-foreground text-sm">
+                  {searchQuery.trim() ? "검색 결과가 없습니다." : "등록된 강사가 없습니다."}
+                </div>
+              ) : (
+                filteredInstructors.map((instructor) => (
                 <div
                   key={instructor.id}
                   className="flex items-center justify-between rounded-lg border p-4 gap-2"
@@ -366,7 +398,8 @@ export function AdminDashboard({
                     </Button>
                   </div>
                 </div>
-              ))}
+              ))
+              )}
             </div>
           </div>
         ) : (
