@@ -24,7 +24,7 @@ export function InstructorCard({ instructor, onViewDetails }: InstructorCardProp
           
           <div className="flex-1 space-y-3">
             <div className="min-w-0 flex-1">
-              <h3 className="mb-1.5 text-lg whitespace-nowrap overflow-hidden text-ellipsis">{instructor.name} 강사</h3>
+              <h3 className="mb-1.5 text-lg break-words">{instructor.name} 강사</h3>
               <p className="text-sm text-muted-foreground mb-2 break-keep">{instructor.position}</p>
             </div>
             
@@ -34,7 +34,7 @@ export function InstructorCard({ instructor, onViewDetails }: InstructorCardProp
                   {instructor.gender === "male" ? "남자" : "여자"}
                 </Badge>
               )}
-              <Badge className="bg-primary/90 hover:bg-primary text-xs px-3 py-1 whitespace-nowrap max-w-full overflow-hidden text-ellipsis">
+              <Badge className="bg-primary/90 hover:bg-primary text-xs px-3 py-1 break-words">
                 📍 {instructor.currentCenter}
               </Badge>
               <Badge variant="outline" className="text-xs px-3 py-1 border-primary/30 whitespace-nowrap">

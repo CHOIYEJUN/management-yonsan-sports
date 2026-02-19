@@ -46,7 +46,7 @@ export function CenterSelection({ centers, categories, onSelectCenter, onSelectC
           <h2 className="mb-3">시설 선택</h2>
           <p className="text-muted-foreground">원하시는 시설을 선택해주세요</p>
         </div>
-        <div className="grid grid-cols-4 gap-4 md:gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 md:grid-cols-3 max-w-5xl mx-auto">
           {centers.map((center) => {
             const Icon = centerIconMap[center.icon] || Building2;
             return (
@@ -59,11 +59,11 @@ export function CenterSelection({ centers, categories, onSelectCenter, onSelectC
                   <div className="mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 p-8 group-hover:from-primary/30 group-hover:to-primary/10 transition-all">
                     <Icon className="h-16 w-16 text-primary" />
                   </div>
-                  <h3 className="text-center text-xl whitespace-nowrap min-w-0 overflow-hidden text-ellipsis max-w-full px-1" title={center.name}>
+                  <h3 className="text-center text-xl break-words px-1">
                     {center.name}
                   </h3>
                   {center.address && (
-                    <p className="text-xs text-muted-foreground mt-2 text-center max-w-full truncate px-1" title={center.address}>
+                    <p className="text-xs text-muted-foreground mt-2 text-center break-words px-1">
                       {center.address}
                     </p>
                   )}
@@ -85,7 +85,7 @@ export function CenterSelection({ centers, categories, onSelectCenter, onSelectC
           <h2 className="mb-3">종목별 강사 찾기</h2>
           <p className="text-muted-foreground">원하시는 종목을 선택해주세요</p>
         </div>
-        <div className="grid grid-cols-4 gap-4 md:gap-6 md:grid-cols-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:gap-6 md:grid-cols-4 max-w-5xl mx-auto">
           {categories.map((category) => {
             const Icon = categoryIconMap[category.icon] || User;
             return (
@@ -98,7 +98,7 @@ export function CenterSelection({ centers, categories, onSelectCenter, onSelectC
                   <div className="mb-4 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 p-5 group-hover:from-primary/30 group-hover:to-primary/10 transition-all">
                     <Icon className="h-10 w-10 text-primary" />
                   </div>
-                  <p className="text-center font-semibold text-lg whitespace-nowrap min-w-0 overflow-hidden text-ellipsis max-w-full px-1">{category.name}</p>
+                  <p className="text-center font-semibold text-lg break-words px-1">{category.name}</p>
                 </CardContent>
               </Card>
             );

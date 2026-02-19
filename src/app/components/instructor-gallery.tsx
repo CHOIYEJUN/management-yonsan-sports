@@ -57,13 +57,13 @@ export function InstructorGallery({
           {filterCenter && (
             <>
               <span>›</span>
-              <span className="font-medium text-primary whitespace-nowrap overflow-hidden text-ellipsis max-w-[140px] sm:max-w-none">{filterCenter}</span>
+              <span className="font-medium text-primary break-words">{filterCenter}</span>
             </>
           )}
           {filterCategory && (
             <>
               <span>›</span>
-              <span className="font-medium text-primary whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] sm:max-w-none">{filterCategory}</span>
+              <span className="font-medium text-primary break-words">{filterCategory}</span>
             </>
           )}
         </div>

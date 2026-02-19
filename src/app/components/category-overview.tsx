@@ -88,7 +88,7 @@ export function CategoryOverview({
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm text-muted-foreground mb-0.5">근무센터</p>
-                    <h3 className="text-2xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{centerGroup.center}</h3>
+                    <h3 className="text-2xl font-semibold break-words">{centerGroup.center}</h3>
                     <p className="text-sm text-muted-foreground mt-1">
                       {centerGroup.categoryGroups.reduce(
                         (sum, group) => sum + group.instructors.length,
@@ -100,7 +100,7 @@ export function CategoryOverview({
                 </div>
 
                 {/* Categories within Center */}
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
                   {centerGroup.categoryGroups.map((categoryGroup) => (
                     <Card
                       key={categoryGroup.category}
@@ -108,7 +108,7 @@ export function CategoryOverview({
                     >
                       <CardHeader className="pb-3">
                         <CardTitle className="flex items-center justify-between gap-2 min-w-0">
-                          <span className="whitespace-nowrap overflow-hidden text-ellipsis">{categoryGroup.category}</span>
+                          <span className="break-words">{categoryGroup.category}</span>
                           <Badge variant="secondary" className="ml-2">
                             {categoryGroup.instructors.length}명
                           </Badge>

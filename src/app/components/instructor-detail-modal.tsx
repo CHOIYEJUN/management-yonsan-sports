@@ -45,7 +45,7 @@ export function InstructorDetailModal({
 
           <div className="flex-1 space-y-3 min-w-0">
             <div>
-              <h3 className="text-3xl mb-2 whitespace-nowrap overflow-hidden text-ellipsis">{instructor.name}</h3>
+              <h3 className="text-3xl mb-2 break-words">{instructor.name}</h3>
               <p className="text-muted-foreground text-lg mb-3 break-keep">{instructor.position}</p>
             </div>
 
@@ -55,7 +55,7 @@ export function InstructorDetailModal({
                   {instructor.gender === "male" ? "남자" : "여자"}
                 </Badge>
               )}
-              <Badge className="bg-primary text-primary-foreground text-sm px-4 py-1.5 whitespace-nowrap max-w-full overflow-hidden text-ellipsis">
+              <Badge className="bg-primary text-primary-foreground text-sm px-4 py-1.5 break-words">
                 📍 {instructor.currentCenter}
               </Badge>
               <Badge variant="outline" className="text-sm px-4 py-1.5 border-primary/40 whitespace-nowrap">

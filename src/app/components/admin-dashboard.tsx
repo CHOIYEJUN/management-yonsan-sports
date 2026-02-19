@@ -311,7 +311,7 @@ export function AdminDashboard({
                       <span className="font-medium">{entry.centerName}</span>
                       <span className="text-muted-foreground mx-1">·</span>
                       <span>{entry.categoryName}</span>
-                      <p className="text-xs text-muted-foreground truncate mt-0.5">{entry.url}</p>
+                      <p className="text-xs text-muted-foreground break-all mt-0.5">{entry.url}</p>
                     </div>
                     <div className="flex gap-1 flex-shrink-0">
                       <Button variant="outline" size="sm" onClick={() => handleEditTimetableEntry(entry)}>수정</Button>
@@ -367,12 +367,12 @@ export function AdminDashboard({
                   className="flex items-center justify-between rounded-lg border p-4 gap-2"
                 >
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium whitespace-nowrap overflow-hidden text-ellipsis">{instructor.name}</p>
+                    <p className="font-medium break-words">{instructor.name}</p>
                     <div className="flex gap-2 mt-1 flex-wrap">
-                      <Badge variant="secondary" className="text-xs whitespace-nowrap max-w-full overflow-hidden text-ellipsis">
+                      <Badge variant="secondary" className="text-xs break-words max-w-full">
                         {instructor.currentCenter}
                       </Badge>
-                      <Badge variant="outline" className="text-xs whitespace-nowrap">
+                      <Badge variant="outline" className="text-xs break-words">
                         {instructor.category}
                       </Badge>
                     </div>
